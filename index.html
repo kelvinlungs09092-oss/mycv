@@ -10,7 +10,13 @@
             --primary-color: #333;
             --secondary-color: #666;
             --accent-color: #007AFF;
-            --bg-color: #d6deff;
+            --bg-color: #f4f4f4;
+            --transition-speed: 0.6s;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         body {
@@ -19,7 +25,38 @@
             color: var(--primary-color);
             background-color: var(--bg-color);
             margin: 0;
-            padding: 40px 20px;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* 頂部操作欄 - 列印時會隱藏 */
+        .action-bar {
+            max-width: 850px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-download {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 122, 255, 0.2);
+        }
+
+        .btn-download:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
         }
 
         .container {
@@ -28,20 +65,17 @@
             background: #fff;
             padding: 40px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: fadeInUp var(--transition-speed) ease-out forwards;
         }
 
         header {
             border-bottom: 2px solid #eee;
             padding-bottom: 20px;
             margin-bottom: 30px;
+            animation: fadeInUp var(--transition-speed) ease-out 0.2s backwards;
         }
 
-        h1 {
-            margin: 0;
-            font-size: 2.5em;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+        h1 { margin: 0; font-size: 2.5em; letter-spacing: 1px; text-transform: uppercase; }
 
         .contact-info {
             display: flex;
@@ -54,62 +88,7 @@
 
         section {
             margin-bottom: 30px;
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Madison Lung - UX & UI Designer CV</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #333;
-            --secondary-color: #666;
-            --accent-color: #007AFF;
-            --bg-color: #d6deff;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            line-height: 1.6;
-            color: var(--primary-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 40px 20px;
-        }
-
-        .container {
-            max-width: 850px;
-            margin: auto;
-            background: #fff;
-            padding: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        header {
-            border-bottom: 2px solid #eee;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 2.5em;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 10px;
-            font-size: 0.9em;
-            color: var(--secondary-color);
-        }
-
-        section {
-            margin-bottom: 30px;
+            animation: fadeInUp var(--transition-speed) ease-out 0.4s backwards;
         }
 
         h2 {
@@ -123,33 +102,32 @@
 
         .item {
             margin-bottom: 20px;
+            padding: 10px;
+            transition: all 0.3s ease;
+            border-radius: 4px;
         }
 
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
+        .item:hover {
+            background-color: #fafafa;
+            transform: translateX(5px);
+            box-shadow: -2px 0 0 var(--accent-color);
         }
 
-        .sub-header {
-            color: var(--secondary-color);
-            font-style: italic;
-            margin-bottom: 5px;
-        }
+        .item-header { display: flex; justify-content: space-between; font-weight: bold; }
+        .sub-header { color: var(--secondary-color); font-style: italic; margin-bottom: 5px; }
 
-        ul {
-            padding-left: 20px;
-            margin: 5px 0;
-        }
+        ul { padding-left: 20px; margin: 5px 0; }
+        li { margin-bottom: 8px; transition: color 0.2s ease; }
+        li:hover { color: var(--accent-color); }
 
-        li {
-            margin-bottom: 5px;
-        }
+        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        /* 列印優化：隱藏按鈕並調整邊距 */
+        @media print {
+            .action-bar { display: none; }
+            body { background-color: white; padding: 0; }
+            .container { box-shadow: none; border: none; width: 100%; max-width: 100%; margin: 0; }
+            section { animation: none; opacity: 1; }
         }
 
         @media (max-width: 600px) {
@@ -160,44 +138,50 @@
 </head>
 <body>
 
+<div class="action-bar">
+    <button class="btn-download" onclick="window.print()">
+        <span>📄</span> 下載 PDF 版本
+    </button>
+</div>
+
 <div class="container">
     <header>
-        <h1>Madison Lung Chak Hin</h1>
+        [span_1](start_span)<h1>Madison Lung Chak Hin</h1>[span_1](end_span)
         <div class="contact-info">
-            <span>📞 63076835</span>
-            <span>✉️ mika.lung@outlook.com</span>
-            <span>📍 Hong Kong</span>
+            [span_2](start_span)<span>📞 63076835</span>[span_2](end_span)
+            [span_3](start_span)<span>✉️ mika.lung@outlook.com</span>[span_3](end_span)
+            [span_4](start_span)<span>📍 Hong Kong</span>[span_4](end_span)
         </div>
     </header>
 
     <section>
-        <h2>Experience 工作經驗</h2>
+        [span_5](start_span)<h2>Experience 工作經驗</h2>[span_5](end_span)
         <div class="item">
             <div class="item-header">
-                <span>UX & UI Designer</span>
-                <span>Mar 2021 - Present</span>
+                [span_6](start_span)<span>UX & UI Designer</span>[span_6](end_span)
+                [span_7](start_span)<span>Mar 2021 - Present</span>[span_7](end_span)
             </div>
-            <div class="sub-header">Automated Systems Holdings Ltd.</div>
+            [span_8](start_span)<div class="sub-header">Automated Systems Holdings Ltd.</div>[span_8](end_span)
         </div>
         <div class="item">
             <div class="item-header">
-                <span>UI/UX Designer</span>
-                <span>Feb 2019 - Mar 2021</span>
+                [span_9](start_span)<span>UI/UX Designer</span>[span_9](end_span)
+                [span_10](start_span)<span>Feb 2019 - Mar 2021</span>[span_10](end_span)
             </div>
-            <div class="sub-header">Al-Momentum</div>
+            [span_11](start_span)<div class="sub-header">Al-Momentum</div>[span_11](end_span)
         </div>
     </section>
 
     <section class="skills-grid">
         <div>
-            <h2>Education 教育背景</h2>
+            [span_12](start_span)<h2>Education 教育背景</h2>[span_12](end_span)
             <div class="item">
-                <strong>BA (Hons) in Media</strong><br>
-                Coventry University (July 2021)
+                [span_13](start_span)<strong>BA (Hons) in Media</strong><br>[span_13](end_span)
+                [span_14](start_span)Coventry University (July 2021)[span_14](end_span)
             </div>
             <div class="item">
-                <strong>Higher Diploma</strong><br>
-                Hong Kong Design Institute (June 2019)
+                [span_15](start_span)<strong>Higher Diploma</strong><br>[span_15](end_span)
+                [span_16](start_span)Hong Kong Design Institute (June 2019)[span_16](end_span)
             </div>
             <div class="item">
                 <strong>Secondary Education</strong><br>
@@ -205,39 +189,40 @@
             </div>
         </div>
         <div>
-            <h2>Software Proficiency 軟體能力</h2>
+            [span_17](start_span)<h2>Software Proficiency 軟體能力</h2>[span_17](end_span)
             <ul>
-                <li>Adobe Creative Suite, Sketch, Figma</li>
-                <li>Video Production</li>
+                [span_18](start_span)<li>Adobe Creative Suite, Sketch, Figma[span_18](end_span)</li>
+                [span_19](start_span)<li>HTML, CSS, JavaScript[span_19](end_span)</li>
+                [span_20](start_span)<li>Video Production[span_20](end_span)</li>
             </ul>
         </div>
     </section>
 
     <section>
-        <h2>Design Skills 設計技能</h2>
+        [span_21](start_span)<h2>Design Skills 設計技能</h2>[span_21](end_span)
         <ul>
-            <li>Developed user personas and journey maps to enhance user experience.</li>
-            <li>Created wireframes and prototypes with AI application for user testing and feedback collection.</li>
-            <li>Collaborated with developers for seamless design implementation and enhancements.</li>
-            <li>Vibe code with Figma AI</li>
+            [span_22](start_span)<li>Developed user personas and journey maps to enhance user experience.[span_22](end_span)</li>
+            [span_23](start_span)<li>Created wireframes and prototypes with AI application for user testing and feedback collection.[span_23](end_span)</li>
+            [span_24](start_span)<li>Collaborated with developers for seamless design implementation and enhancements.[span_24](end_span)</li>
+            [span_25](start_span)<li>Vibe code with Figma AI[span_25](end_span)</li>
         </ul>
     </section>
 
     <section>
-        <h2>Research & Analysis 研究與分析</h2>
+        [span_26](start_span)<h2>Research & Analysis 研究與分析</h2>[span_26](end_span)
         <ul>
-            <li>Conducted usability testing to identify user pain points and improve interfaces.</li>
-            <li>Analyzed user feedback to guide design iterations and improve satisfaction.</li>
-            <li>Utilized data analytics tools to drive design decisions based on user behavior.</li>
+            [span_27](start_span)<li>Conducted usability testing to identify user pain points and improve interfaces.[span_27](end_span)</li>
+            [span_28](start_span)<li>Analyzed user feedback to guide design iterations and improve satisfaction.[span_28](end_span)</li>
+            [span_29](start_span)<li>Utilized data analytics tools to drive design decisions based on user behavior.[span_29](end_span)</li>
         </ul>
     </section>
 
     <section>
-        <h2>Professional Development 專業發展</h2>
+        [span_30](start_span)<h2>Professional Development 專業發展</h2>[span_30](end_span)
         <ul>
-            <li>Google Digital Garage: Fundamentals of Digital Marketing (April 2020)</li>
-            <li>DELE Spanish A1 (January 2021)</li>
-            <li>Web Development & Prototyping Skills</li>
+            [span_31](start_span)<li>Google Digital Garage: Fundamentals of Digital Marketing (April 2020)[span_31](end_span)</li>
+            [span_32](start_span)<li>DELE Spanish A1 (January 2021)[span_32](end_span)</li>
+            [span_33](start_span)<li>Web Development & Prototyping Skills[span_33](end_span)</li>
         </ul>
     </section>
 </div>
